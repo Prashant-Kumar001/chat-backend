@@ -34,7 +34,7 @@ import Message from "./src/models/user.message.js";
 dotenv.config();
 connectDB();
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  origin: process.env.CLIENT_URL || "https://chat-frontend-mauve-psi.vercel.app",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
