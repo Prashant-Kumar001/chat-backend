@@ -2,6 +2,14 @@ import ResponseHandler from "../utils/responseHandler.js";
 import { registerUser, loginUser, isLogin } from "../services/auth.Service.js";
 import statusCodes from "../utils/statusCodes.js";
 import { generateToken } from "../utils/helper.js";
+
+const cookieOptions = {
+  maxAge: 15 * 24 * 60 * 60 * 1000,
+  sameSite: "none",
+  httpOnly: true,
+  secure: true,
+};
+
 export const register = async (req, res) => {
   try {
     const { username, name, email, password, bio } = req.body;
@@ -42,12 +50,7 @@ export const login = async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+    res.cookie("auth_token", token, cookieOptions);
 
     const metadata = {
       timestamp: new Date().toISOString(),
