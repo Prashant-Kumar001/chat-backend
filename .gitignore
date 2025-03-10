@@ -1,0 +1,46 @@
+# .gitignore file example
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Node.js dependencies
+node_modules/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env
+
+# IDE/editor config files
+.vscode/
+.idea/
+
+# Build directories
+build/
+dist/
+
+# Log files
+*.log
+
+# OS-generated files
+*.swp
+*~
+
+# macOS Finder folder settings
+.AppleDouble
+.LSOverride
+
+# JetBrains specific
+.idea/
+
+# NPM/Yarn lock files
+yarn.lock
+package-lock.json
+
+# Python virtualenv
+venv/
+env/
