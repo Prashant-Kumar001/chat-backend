@@ -14,10 +14,6 @@ export const register = async (req, res) => {
   try {
     const { username, name, email, password, bio } = req.body;
     const { file } = req;
-
-    console.log(req.body)
-    console.log(file)
-
     const userData = await registerUser(
       username,
       name,
@@ -26,7 +22,6 @@ export const register = async (req, res) => {
       bio,
       file
     );
-
     const metadata = {
       timestamp: new Date().toISOString(),
       ip: req.ip,
@@ -41,7 +36,6 @@ export const register = async (req, res) => {
       metadata
     );
   } catch (error) {
-    console.log(error)
     return ResponseHandler.error(res, error.statusCode, error.message);
   }
 };
