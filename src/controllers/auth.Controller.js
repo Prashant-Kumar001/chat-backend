@@ -15,6 +15,9 @@ export const register = async (req, res) => {
     const { username, name, email, password, bio } = req.body;
     const { file } = req;
 
+    console.log(req.body)
+    console.log(file)
+
     const userData = await registerUser(
       username,
       name,
@@ -38,6 +41,7 @@ export const register = async (req, res) => {
       metadata
     );
   } catch (error) {
+    console.log(error)
     return ResponseHandler.error(res, error.statusCode, error.message);
   }
 };
@@ -45,10 +49,8 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     const { user } = await loginUser(email, password);
-    console.log(user);
 
     const token = generateToken(user._id);
 
@@ -78,7 +80,6 @@ export const login = async (req, res) => {
       metadata
     );
   } catch (error) {
-    console.log(error);
     if (error.message === "Invalid credentials") {
       return ResponseHandler.error(
         res,
