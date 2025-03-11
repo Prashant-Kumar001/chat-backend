@@ -6,7 +6,7 @@ import {
     isLoginTrue,
 } from "../controllers/auth.Controller.js";
 import { protect } from "../middleware/auth.Middleware.js";
-import {upload, processFile} from "../middleware/uploadImage.js";
+import { upload, processFile } from "../middleware/uploadImage.js";
 const router = express.Router();
 import { validateUserInput, loginValidator } from "../validation/auth.validation.js"
 

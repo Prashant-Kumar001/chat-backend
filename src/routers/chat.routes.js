@@ -13,7 +13,7 @@ import {
   deleteChat,
   getMessages,
 } from "../controllers/chat.controller.js";
-import upload from "../middleware/uploadImage.js";
+import { upload } from "../middleware/uploadImage.js";
 import {
   validateGroup,
   validateUserAdd,
