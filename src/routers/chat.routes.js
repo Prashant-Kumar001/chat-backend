@@ -13,7 +13,7 @@ import {
   deleteChat,
   getMessages,
 } from "../controllers/chat.controller.js";
-import { upload } from "../middleware/uploadImage.js";
+import { upload, processFiles } from "../middleware/uploadImage.js";
 import {
   validateGroup,
   validateUserAdd,
@@ -32,13 +32,10 @@ router.put("/add", validateUserAdd, addMembers);
 router.put("/remove", validateUserRemove, removeMembers);
 router.delete("/leave/:chatId", validateParams, leaveGroup);
 
-// send attachments
-router.post("/attachment", upload.array("files", 5), validateAttachment, sendAttachment);
+router.post("/attachment", upload.array("files", 5), processFiles, validateAttachment, sendAttachment);
 
-// get messages
 router.get("/message/:id", getMessages);
 
-//get chat details, rename, delete
 router
   .route("/:chatId")
   .get(validateParams, getChatDetails)

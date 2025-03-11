@@ -117,7 +117,6 @@ export const validateParams = (req, res, next) => {
 };
 
 export const validateAttachment = (req, res, next) => {
-
   const objectIdValidation = (value, helpers) => {
     if (!mongoose.Types.ObjectId.isValid(value)) {
       return helpers.error("any.invalid");

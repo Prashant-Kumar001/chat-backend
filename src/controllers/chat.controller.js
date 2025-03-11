@@ -243,40 +243,31 @@ const leaveGroup = asyncHandler(async (req, res) => {
 
 const sendAttachment = asyncHandler(async (req, res) => {
     const { chatId } = req.body;
-
     const [chats, me] = await Promise.all([
         Chat.findById(chatId),
         User.findById(req.user?._id),
     ]);
-
     const files = req.files || [];
-
     if (files.length === 0) {
         return ResponseHandler.error(res, 400, "No files uploaded");
     }
     if (files.length >= 5) {
         return ResponseHandler.error(res, 400, "only 5 files can be uploaded at a time");
     }
-
     if (!chats) {
         return ResponseHandler.error(res, 400, "Chat not found");
     }
-
     if (!me) {
         return ResponseHandler.error(res, 400, "User not found");
     }
-
     const attachments = await uploadFilesToCloudinary(files);
-
     const messageForDb = {
         content: "",
         sender: me._id,
         chat: chatId,
         attachments,
     };
-
     const messages = await Message.create(messageForDb);
-
     const messageForRealTime = {
         ...messageForDb,
         content: null,
@@ -287,13 +278,11 @@ const sendAttachment = asyncHandler(async (req, res) => {
         },
         createdAt: new Date().toISOString(),
     };
-
     emitEvent(req, NEW_MESSAGE, chats.members, {
         chatId,
         message: messageForRealTime,
     });
     emitEvent(req, NEW_MESSAGE_ALERT, chats.members, { ChatId: chatId });
-
     return ResponseHandler.success(
         res,
         200,

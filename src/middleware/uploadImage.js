@@ -52,4 +52,32 @@ const processFile = async (req, res, next) => {
   }
 };
 
-export { upload, processFile };
+const processFiles = async (req, res, next) => {
+  if (!req.files || req.files.length === 0) {
+    return next(new CustomError("No files uploaded!", 400));
+  }
+
+  try {
+    await Promise.all(
+      req.files.map(async (file) => {
+        const filePath = `${uploadDir}${Date.now()}-${file.originalname}`;
+
+        if (file.mimetype.startsWith("image/")) {
+          await sharp(file.buffer)
+            .toFormat("webp", { quality: 100 }) // Convert to WebP without losing quality
+            .toFile(filePath);
+        } else {
+          fs.writeFileSync(filePath, file.buffer); // Save other file types as they are
+        }
+
+        file.path = filePath;
+      })
+    );
+
+    next();
+  } catch (error) {
+    next(new CustomError("Error processing files", 500));
+  }
+};
+
+export { upload, processFile, processFiles };
