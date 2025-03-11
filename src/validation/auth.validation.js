@@ -14,6 +14,9 @@ const validateUserInput = (req, res, next) => {
   const { username, name, email, password, bio } = req.body;
   const { file } = req;
 
+  console.log(req.body)
+  console.log(req)
+
   const { error } = schema.validate({ username, name, email, password, bio });
 
   if (error) {
