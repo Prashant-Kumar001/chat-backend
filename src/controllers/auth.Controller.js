@@ -45,8 +45,10 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
 
     const { user } = await loginUser(email, password);
+    console.log(user);
 
     const token = generateToken(user._id);
 
@@ -76,6 +78,7 @@ export const login = async (req, res) => {
       metadata
     );
   } catch (error) {
+    console.log(error);
     if (error.message === "Invalid credentials") {
       return ResponseHandler.error(
         res,
