@@ -150,7 +150,7 @@ export const validateAttachment = (req, res, next) => {
 
 export const validateRenamed = (req, res, next) => {
   const paramsSchema = Joi.object({
-    id: Joi.string()
+    chatId: Joi.string()
       .regex(/^[0-9a-fA-F]{24}$/)
       .required()
       .messages({
@@ -159,7 +159,6 @@ export const validateRenamed = (req, res, next) => {
       }),
   });
 
-  // Validate `newName` in `req.body`
   const bodySchema = Joi.object({
     newGroupName: Joi.string().trim().min(3).max(50).required().messages({
       "string.base": "New name must be a string",
@@ -170,13 +169,11 @@ export const validateRenamed = (req, res, next) => {
     }),
   });
 
-  // Validate `req.params`
   const paramsValidation = paramsSchema.validate(req.params);
   if (paramsValidation.error) {
     return res.status(400).json({ message: paramsValidation.error.details[0].message });
   }
 
-  // Validate `req.body`
   const bodyValidation = bodySchema.validate(req.body);
   if (bodyValidation.error) {
     return res.status(400).json({ message: bodyValidation.error.details[0].message });

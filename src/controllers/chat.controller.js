@@ -322,7 +322,8 @@ const getChatDetails = asyncHandler(async (req, res) => {
 
 const renameGroup = asyncHandler(async (req, res) => {
     const { newGroupName } = req.body;
-    const { id } = req.params;
+    const { chatId } = req.params;
+    const id = chatId
     const chat = await Chat.findById(id);
     if (!chat) {
         return ResponseHandler.error(res, 404, "Chat not found");
@@ -356,7 +357,7 @@ const deleteChat = asyncHandler(async (req, res) => {
         return ResponseHandler.error(
             res,
             403,
-            "You are not allowed to delete this chat! don`t repeat it, this can be done by admin "
+            "You are not allowed to delete this chat! don`t repeat it, this can be done by only admin "
         );
     }
     if (!chat.members.includes(req.user?._id) && !chat.GroupChat) {

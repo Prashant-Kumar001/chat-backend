@@ -62,7 +62,6 @@ export const fetchChats = async (req, res) => {
       metadata
     );
   } catch (error) {
-
     return ResponseHandler.error(
       res,
       error.statusCode || statusCodes.INTERNAL_SERVER_ERROR,
@@ -93,7 +92,6 @@ export const fetchMessages = async (req, res) => {
       metadata
     );
   } catch (error) {
-
     return ResponseHandler.error(
       res,
       error.statusCode || statusCodes.INTERNAL_SERVER_ERROR,

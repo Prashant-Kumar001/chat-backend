@@ -45,8 +45,6 @@ export const protect = async (req, res, next) => {
       ip: req.ip,
       userAgent: req.headers["user-agent"],
     };
-
-    console.log(error.message);
     return ResponseHandler.error(
       res,
       statusCodes.UNAUTHORIZED,

@@ -12,6 +12,7 @@ import ResponseHandler from "../utils/responseHandler.js";
 import statusCodes from "../utils/statusCodes.js";
 import { ALERT, NEW_REQUEST, REFETCH_CHATS } from "../constants/events.js";
 import { emitEvent } from "../utils/features.js";
+import User from "../models/user.Model.js";
 
 export const fetchUserById = async (req, res) => {
   try {
@@ -90,7 +91,8 @@ export const removeUser = async (req, res) => {
 
 export const getMyProfile = async (req, res) => {
   try {
-    const user = req.user;
+    const id = req.user?._id
+    const user = await User.findById(id);
     if (!user) {
       return ResponseHandler.error(
         res,

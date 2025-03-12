@@ -25,8 +25,6 @@ export const adminLogin = async (email, password) => {
 export const getAllUsers = async (page, limit) => {
     const [allUsers, total] = await Promise.all([
         User.find({})
-            .skip((page - 1) * limit)
-            .limit(limit)
             .sort({ createdAt: -1 })
             .lean(),
         User.countDocuments(),
@@ -65,8 +63,6 @@ export const getAllUsers = async (page, limit) => {
 export const getAllChats = async (page, limit) => {
     const [allChats, total] = await Promise.all([
         Chat.find({})
-            .skip((page - 1) * limit)
-            .limit(limit)
             .sort({ createdAt: -1 })
             .lean()
             .populate({
@@ -119,8 +115,6 @@ export const getAllChats = async (page, limit) => {
 export const getAllMessages = async (page, limit) => {
     const [allMessages, total] = await Promise.all([
         Message.find({})
-            .skip((page - 1) * limit)
-            .limit(limit)
             .sort({ createdAt: -1 })
             .lean()
             .populate("sender", "username avatar")

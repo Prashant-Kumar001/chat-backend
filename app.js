@@ -122,9 +122,9 @@ io.on("connection", (socket) => {
       throw new CustomError(error.message, 500);
     }
   });
-  socket.on(TYPING, ({ chatId, members }) => {
+  socket.on(TYPING, ({ chatId, members, user }) => {
     const membersSocket = getSocketId(members);
-    socket.to(membersSocket).emit(TYPING, { chatId });
+    socket.to(membersSocket).emit(TYPING, { chatId, name:user.name, members: membersSocket });
   });
   socket.on(STOP_TYPING, ({ chatId, members }) => {
     const membersSocket = getSocketId(members);
