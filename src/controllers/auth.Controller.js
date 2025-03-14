@@ -89,14 +89,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("auth_token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      maxAge: 0,
-      path: "/",
-      domain: process.env.CLIENT_URL,
-    });
+    res.clearCookie("auth_token", cookieOptions);
     return res.status(200).json({
       message: "Logout successful",
       success: true,
@@ -104,6 +97,7 @@ export const logout = async (req, res) => {
       token: null,
     });
   } catch (error) {
+    console.error(error);
     return ResponseHandler.error(
       res,
       statusCodes.INTERNAL_SERVER_ERROR,
