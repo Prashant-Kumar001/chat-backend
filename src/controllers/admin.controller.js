@@ -7,6 +7,7 @@ import {
   adminLogin,
 } from "../services/admin.service.js";
 import statusCodes from "../utils/statusCodes.js";
+import { cookieOptions } from "../utils/helper.js";
 
 export const fetchUsers = async (req, res) => {
   try {
@@ -31,7 +32,6 @@ export const fetchUsers = async (req, res) => {
       metadata
     );
   } catch (error) {
-
     return ResponseHandler.error(
       res,
       error.statusCode || statusCodes.INTERNAL_SERVER_ERROR,
@@ -129,13 +129,7 @@ export const admin = async (req, res) => {
       expire: "15m",
     };
 
-    res.cookie("adminToken", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      expires: new Date(Date.now() + 15 * 60 * 1000), // ✅ 15 minutes expiration
-    });
-
+    res.cookie("adminToken", token, cookieOptions);
 
     return ResponseHandler.success(
       res,
@@ -148,8 +142,8 @@ export const admin = async (req, res) => {
     return ResponseHandler.error(
       res,
       error.statusCode ||
-      statusCodes.INTERNAL_SERVER_ERROR ||
-      "Internal Server Error",
+        statusCodes.INTERNAL_SERVER_ERROR ||
+        "Internal Server Error",
       error.message
     );
   }
@@ -169,10 +163,9 @@ export const logout = async (req, res) => {
 };
 
 export const getAdminData = (req, res) => {
-
   res.json({
     admin: true,
     timestamp: new Date().toISOString(),
-    message: "welcome Admin"
-  })
-}
+    message: "welcome Admin",
+  });
+};

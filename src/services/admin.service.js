@@ -11,9 +11,6 @@ export const adminLogin = async (email, password) => {
     }
     const admin = {
         _id: user._id,
-        // username: user.username,
-        // avatar: user.avatar?.secure_url,
-        // email: user.email,
         admin: true,
         role: user.role,
     };

@@ -2,13 +2,7 @@ import ResponseHandler from "../utils/responseHandler.js";
 import { registerUser, loginUser, isLogin } from "../services/auth.Service.js";
 import statusCodes from "../utils/statusCodes.js";
 import { generateToken } from "../utils/helper.js";
-
-const cookieOptions = {
-  maxAge: 15 * 24 * 60 * 60 * 1000,
-  sameSite: "none",
-  httpOnly: true,
-  secure: true,
-};
+import { cookieOptions } from "../utils/helper.js";
 
 export const register = async (req, res) => {
   try {
