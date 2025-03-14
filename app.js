@@ -5,7 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
-import http from "http"; 
+import http from "http"
 import { Server } from "socket.io";
 import { randomUUID } from "crypto";
 
@@ -91,7 +91,6 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
   const user = socket?.user;
   ids.set(user._id.toString(), socket.id);
-
   socket.on(NEW_MESSAGE, async ({ chatId, members, message }) => {
     const messageForRealTime = {
       content: message,
@@ -124,7 +123,7 @@ io.on("connection", (socket) => {
   });
   socket.on(TYPING, ({ chatId, members, user }) => {
     const membersSocket = getSocketId(members);
-    socket.to(membersSocket).emit(TYPING, { chatId, name:user.name, members: membersSocket });
+    socket.to(membersSocket).emit(TYPING, { chatId, name: user.name, members: membersSocket });
   });
   socket.on(STOP_TYPING, ({ chatId, members }) => {
     const membersSocket = getSocketId(members);

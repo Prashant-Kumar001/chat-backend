@@ -135,11 +135,12 @@ export const getAllMessages = async (page, limit) => {
             },
             chat: {
                 _id: message.chat?._id,
-                username: message.chat?.username,
-                creator: message.chat?.creator?._id,
+                username: message.chat?.name,
+                creator: message.chat?.creator,
                 groupChat: message.chat?.GroupChat,
             },
             content: message.content,
+            attachments: message.attachments ? message.attachments : [],
             createdAt: message.createdAt,
         };
     });
