@@ -15,6 +15,7 @@ export const getUserById = async (userId) => {
 };
 
 export const updateUser = async (userId, updateData) => {
+
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new CustomError("Invalid user ID format", 400);
   }

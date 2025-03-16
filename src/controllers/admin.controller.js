@@ -150,7 +150,7 @@ export const admin = async (req, res) => {
 };
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("adminToken");
+    res.clearCookie("adminToken", cookieOptions);
     return ResponseHandler.success(res, statusCodes.OK, "Logout successful");
   } catch (error) {
     return ResponseHandler.error(
