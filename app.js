@@ -39,13 +39,6 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-const limiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 50,
-  message: "Too many requests, please try again later.",
-  headers: true,
-});
-
 
 const ids = new Map();
 const onlineUsers = [];
@@ -64,7 +57,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("src/public/uploads"));
-app.use(limiter);
 
 
 if (process.env.NODE_ENV === "production") {
@@ -135,11 +127,13 @@ io.on("connection", (socket) => {
     socket.to(membersSocket).emit(REFETCH_CHATS, { chatId, members, name });
   });
   socket.on(CHAT_JOINED, ({ user, members }) => {
+    console.log('JOINED', user, members);
     onlineUsers.push(user.toString());
     const membersSocket = getSocketId(members);
     io.to(membersSocket).emit(ONLINE_USER, onlineUsers);
   });
   socket.on(CHAT_LEAVED, ({ user, members }) => {
+    console.log('LEAVED', user, members);
     onlineUsers.pop(user.toString());
     const membersSocket = getSocketId(members);
     io.to(membersSocket).emit(ONLINE_USER, onlineUsers);
@@ -161,7 +155,7 @@ app.use((err, req, res, next) => {
   }
   return res.status(err.statusCode || 500).json({
     success: false,
-    message: process.env.NODE_ENV === "development" ? err.message : "Internal Server Error 🥱🥱",
+    message: process.env.NODE_ENV === "development" ? err.message : err.message,
   });
 });
 
